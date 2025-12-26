@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Card Kinta</title>
+  <style>
+    :root{--bg:#f1f0f0;--muted:#bcbcbc;--soft:#ffffff;--text:#252320;--muted-text:#666}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;background:var(--bg);color:var(--text)}
+    .wrap{max-width:1100px;margin:48px auto;padding:28px}
+    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+    .title{font-size:1.4rem;font-weight:700}
+    .subtitle{color:var(--muted-text);font-size:.9rem}
+
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .card{background:linear-gradient(180deg,var(--muted),var(--bg));padding:14px;border-radius:10px;border:1px solid var(--soft)}
+
+    .photo{grid-column:span 5;min-height:160px;border-radius:8px;overflow:hidden;background:var(--soft);display:flex;align-items:center;justify-content:center}
+    .photo.small{grid-column:span 3;min-height:110px}
+    .photo.tall{grid-column:span 4;min-height:240px}
+    .photo img{width:100%;height:100%;object-fit:cover;display:block}
+
+    .controls{display:flex;gap:8px;align-items:center}
+    .btn{background:transparent;border:1px solid var(--soft);padding:8px 12px;border-radius:8px;color:var(--text);cursor:pointer}
+
+    .info{display:none;margin-top:10px;color:var(--muted-text)}
+    footer{margin-top:34px;color:var(--muted-text);text-align:center;font-size:.9rem}
+
+    @media(max-width:780px){.grid{grid-template-columns:repeat(6,1fr)}.photo{grid-column:span 6}.photo.small{grid-column:span 3}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="header">
+      <div>
+        <div class="title">Kinta - Card</div>
+        <div class="subtitle">Seja bem vindo(a) · a este card!</div>
+    </div>
+    </header>
+
+    <section class="grid">
+      <figure class="photo tall card">
+        <img src="https://i.pinimg.com/1200x/76/32/42/763242a73fc73cacc96cf99b2cc8c0a7.jpg" alt="unnamed photo 1">
+        <figcaption style="margin-top:8px">
+        </figcaption>
+      </figure>
+
+      <figure class="photo small card">
+        <img src="https://i.pinimg.com/736x/6b/59/aa/6b59aa1c3f17a71d45b9a6f7760aa1a7.jpg" alt="unnamed photo 2">
+        <figcaption style="margin-top:8px">
+        </figcaption>
+      </figure>
+
+      <article class="card" style="grid-column:span 4;">
+        <h3>Quem sou eu?</h3>
+        <p class="subtitle">Motivações — Desejos</p>
+        <div style="margin-top:12px">
+          <button class="btn reveal" data-id="info-c">Kinta?</button>
+          <div id="info-c" class="info">me chamo Mateus, na internet sou chamado de Kinta, possuo 15 anos e tenho um interesse forte por computação, psicologia e arte. Adoro fazer amizades, ser o sorriso de alguns, desenhar, escutar musicas de fora, assitir alguma mídia com historias prolongadas, escrever e diversos outros.</div>
+        </div>
+      </article>
+
+      <figure class="photo card" style="grid-column:span 8;">
+        <img src="https://i.pinimg.com/736x/31/33/22/3133226dc4582e0fa5e820291ad76e66.jpg" alt="unnamed photo 3">
+        <figcaption style="margin-top:8px">
+        </figcaption>
+      </figure>
+
+      <figure class="photo small card">
+        <img src="https://i.pinimg.com/736x/af/0f/a7/af0fa7b3f307daa8322f510d887cb60b.jpg" alt="unnamed photo 4">
+        <figcaption style="margin-top:8px">
+        </figcaption>
+      </figure>
+
+      <!-- panels referenced by header buttons -->
+      <div id="panel-1" class="card" style="grid-column:span 12;margin-top:6px">
+        <strong>Breve historia</strong>
+        <p class="subtitle">Alguem que gosta de tecnologia e amizades desde a infancia, e algo que permaneceu até dias recentes. Minha familia foi da mesma forma como acolhedora, apoiadora. Além das amizades que eu mais confio, que eu sei que estarão comigo até na mizeria. Eu agradeço a sua vizualização, pois </p><strong>"26/10/2025"</strong><p> eu estou começando algo!</p>
+      </div>
+
+      <div id="panel-2" class="card" style="grid-column:span 12;margin-top:6px">
+        <strong>Habilidades e Paixões</strong>
+        <p class="subtitle">Sendo alguem que gosta de fazer as coisas por amor, eu gosto de programar, cozinhar, treinar, desenhar, escrever, dormir, e amo pudim, sorvete, bolo, estrogonofe.</p>
+        <p class="subtitle">Mas ainda sim, desgosto de pessoas mal intencionadas, usar muito redes sociais, desrespeito, preconceito, e também desgosto de milho, figado, azeitona</p>
+
+      </div>
+
+    </section>
+
+    <footer>
+      <small>Obrigado por ler! — Mateus da Silva Almeida</small>
+    </footer>
+  </main>
+
+  <script>
+    // toggles the small info blocks
+    document.addEventListener('click', function(e){
+      if(e.target.matches('.btn.reveal')){
+        const id = e.target.getAttribute('data-id');
+        const el = document.getElementById(id);
+        if(!el) return;
+        el.style.display = el.style.display === 'block' ? 'none' : 'block';
+      }
+
+      // header buttons scroll to a panel (keeps structure JS-light)
+      if(e.target.matches('.btn[data-target]')){
+        const id = e.target.getAttribute('data-target');
+        const panel = document.getElementById(id);
+        if(panel) panel.scrollIntoView({behavior:'smooth',block:'center'});
+      }
+    })
+  </script>
+</body>
+</html>
